@@ -1,6 +1,13 @@
 const express = require('express');
 const app = express();
+const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+
+app.use(expressValidator());
+app.use(cookieParser());
+app.use(session({ secret: 'apu', saveUninitialized: false, resave: false }));
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())

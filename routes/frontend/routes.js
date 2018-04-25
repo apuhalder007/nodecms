@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const { check, validationResult } = require('express-validator/check');
-const { matchedData, sanitize } = require('express-validator/filter');
 router.get('/', (req, res)=>{
     res.render('frontend/index', {title: "Welcome to the brand!"});
 });
@@ -18,38 +16,26 @@ router.get('/contact-us', (req, res)=>{
     res.render('frontend/contact-us', {title: "Contact Us"});
 });
 
-router.post('/contact-us',
-[
-    check('email')
-    // Every validator method in the validator lib is available as a
-    // method in the check() APIs.
-    // You can customize per validator messages with .withMessage()
-    .isEmail().withMessage('must be an email')
+router.post('/contact-us',(req, res)=>{
 
-    // Every sanitizer method in the validator lib is available as well!
-    .trim()
-    .normalizeEmail(),
 
-    // ...or throw your own errors using validators created with .custom()
-    // .custom(value => {
-    //     return findUserByEmail(value).then(user => {
-    //     throw new Error('this email is already in use');
-    //     })
-    // }),
+    let name = req.body.name;
+    let email = req.body.email;
+    let comments = req.body.comments;
 
-    // No special validation required? Just check if data exists:
-    check('name').isEmpty().withMessage('must be fill').trim(),
+    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('email', 'Enter a valid email').isEmail();
 
-    // No special validation required? Just check if data exists:
-    check('comments').isEmpty().withMessage('must be fill').trim()
-
-], 
-(req, res, next)=>{
-     
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.mapped() });
-    }else{
+    var errors = req.validationErrors();
+    if (errors) {
+        req.session.errors = errors;
+        req.session.success = false;
+        //res.redirect('/blockchain');
+        return res.status(422).json({ errors: errors });
+    }
+    else {
+        req.session.success = true;
+        //res.redirect('/');
         res.end(JSON.stringify(req.body, null, 2));
     }
     
