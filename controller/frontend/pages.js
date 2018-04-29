@@ -25,8 +25,9 @@ pages.contact_post = function (req, res) {
     if (errors) {
         req.session.errors = errors;
         req.session.success = false;
-        //res.redirect('/blockchain');
-        return res.status(422).json({ errors: errors });
+        req.flash('errors', errors);
+        res.redirect('/contact-us');
+        //return res.status(422).json({ errors: errors });
     }
     else {
         req.session.success = true;

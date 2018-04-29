@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const pagesController = require('../../controller/pages');
+const pagesController = require('../../controller/frontend/pages');
 router.get('/', pagesController.home);
 
 router.get('/about-us', pagesController.about);
@@ -12,6 +12,6 @@ router.get('/contact-us', pagesController.contact);
 
 router.post('/contact-us', pagesController.contact_post);
 
-router.get('*', pagesController.not_found);
+//router.get('*', pagesController.not_found);
 
 module.exports = router;

@@ -1,0 +1,17 @@
+<% if(messages.errors){ %>
+    <div class="alert alert-danger">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <% messages.errors.forEach(function(el , index){ %>
+            <p><%=el.msg %></p>
+        <% }) %>
+    </div>
+<% } %>
+
+<% if(messages.success){ %>
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <% messages.success.forEach(function(el , index){ %>
+        <p><%=el.msg %></p>
+    <% }) %>
+</div>
+<% } %>
