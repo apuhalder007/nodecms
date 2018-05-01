@@ -34,13 +34,13 @@
                                     <tr class="odd gradeX">
                                         <td><%=banner.title %></td>
                                         <td><%=banner.description %></td>
-                                        <td><%=banner.image %></td>
+                                        <td><img src="/uploads/<%=banner.image %>" width="50"></td>
                                         <td class="center"><%=banner.status %></td>
                                         <td class="center">
                                             <a href="javascript:void(0)" class="btn btn-primary">
                                                 Edit
                                             </a>
-                                            <a href="javascript:void(0)" class="btn btn-secondary">
+                                            <a href="/admin/banner/delete/<%=banner._id %>" class="btn btn-secondary">
                                                 Delete
                                             </a>
                                         </td>

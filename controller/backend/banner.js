@@ -24,7 +24,7 @@ banner.addPost = function (req, res, next) {
    
     var errors = req.validationErrors();
     if (!errors){
-        const uploadpath = __dirname+'/uploads/' + filename;
+        const uploadpath = 'public/uploads/' + filename;
         console.log(uploadpath)
         image.mv(uploadpath, function (err, uploadData) {
             if (err) throw err;
@@ -52,6 +52,18 @@ banner.addPost = function (req, res, next) {
         res.redirect("/admin/banner/add");
     }
     
+}
+
+banner.delete = function(req, res, next){
+    let id = req.params.id;
+
+    bannerModel.findByIdAndRemove(id, function(err, banner){
+        if(err) throw err;
+        if(banner){
+            req.flash("success", [{msg:"Banner deleted successfully."}]);
+            res.redirect('/admin/banners');
+        }
+    })
 }
 
 module.exports = banner;
