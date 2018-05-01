@@ -8,6 +8,6 @@ Router.get('/', functions.loggedIn,  dashboard.home);
 
 //Banners Route
 Router.get('/banners', functions.loggedIn,  bannerController.all);
-Router.get('/banner/add', functions.loggedIn,  bannerController.add);
-
+Router.get('/banner/add', bannerController.add);
+Router.post('/banner/add', bannerController.addPost);
 module.exports = Router;
