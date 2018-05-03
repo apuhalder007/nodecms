@@ -54,6 +54,76 @@ banner.addPost = function (req, res, next) {
     
 }
 
+banner.edit = function(req, res, next){
+    let id = req.params.id;
+    let banner = bannerModel.findById(id, function(err, banner){
+        if(err) throw err;
+        if(banner){
+            console.log(banner);
+            res.render('backend/banner/edit-banner', {title: "Edit Banner", banner:banner});
+        } 
+    })
+}
+banner.editPost = function(req, res, next){
+    
+    errors = [];
+    let title = req.body.title;
+    let description = req.body.description;
+    let image = req.files.image;
+    let filename = typeof image !== "undefined" ? image.name : '';
+    let order = req.body.order;
+    let id = req.body.id;
+    //console.log(image);
+    req.checkBody('title', 'Please enter a banner title').notEmpty(); 
+    //req.checkBody('image', 'Please upload an image Jpeg, Png or Gif').isImage(filename);
+
+    console.log(filename);
+
+   
+    var errors = req.validationErrors();
+    if (!errors){
+
+        if(filename !=''){
+            const uploadpath = 'public/uploads/' + filename;
+            image.mv(uploadpath, function (err, uploadData) {
+                if (err) throw err;
+                if (uploadData) {
+                    console.log('Image has been sucessfully uploded!');
+                }
+            })
+            //console.log(title + ' ' + description + ' ' + image.name);
+            var banner = {
+                title: title,
+                image: filename,
+                description: description,
+                order: order,
+                status: 1 
+            };
+        }else{
+            var banner = {
+                title: title,
+                description: description,
+                order: order,
+                status: 1 
+            };
+        }
+        
+        bannerModel.findByIdAndUpdate(id, banner, function(err, banner){
+            if(err) throw err;
+            if(banner){
+                req.flash('success', [{msg: "Banner edit successfully."}]);
+                res.redirect('/admin/banner/edit/'+id);
+            }
+        })
+    }else{
+        req.flash('errors', errors);
+        res.redirect("/admin/banner/edit/"+id);
+    }
+   
+
+
+}
+
 banner.delete = function(req, res, next){
     let id = req.params.id;
 
