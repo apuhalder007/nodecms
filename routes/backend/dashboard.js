@@ -3,6 +3,7 @@ const Router = express.Router();
 let dashboard = require('../../controller/backend/dashboard');
 let bannerController = require('../../controller/backend/banner');
 let pageController = require('../../controller/backend/page');
+let menuController = require('../../controller/backend/menu');
 let functions = require('../../utilities/functions');
 Router.get('/', functions.loggedIn,  dashboard.home);
 
@@ -22,4 +23,12 @@ Router.post('/page/add', pageController.addPost);
 Router.get('/page/edit/:id', pageController.edit);
 Router.post('/page/edit/', pageController.editPost);
 Router.get('/page/delete/:id', pageController.delete);
+
+//page Route
+Router.get('/menus', functions.loggedIn, menuController.all);
+Router.get('/menu/add', menuController.add);
+Router.post('/menu/add', menuController.addPost);
+Router.get('/menu/edit/:id', menuController.edit);
+Router.post('/menu/edit/', menuController.editPost);
+Router.get('/menu/delete/:id', menuController.delete);
 module.exports = Router;
