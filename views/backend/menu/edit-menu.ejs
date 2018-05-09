@@ -19,9 +19,9 @@
                     <div class="row">
                         
                             <% include ../../_layout/messages %>
-                            <div class="col-lg-4">
-                                <form role="form" action="/admin/menu/edit" 
-                                    method="post" enctype="multipart/form-data">
+                            <form role="form" action="/admin/menu/edit" method="post" enctype="multipart/form-data">
+                                
+                                <div class="col-lg-4">
                                     <div class="form-group">
                                         <label>Title</label>
                                         <input class="form-control" name="title" 
@@ -45,50 +45,49 @@
                                         </select>
                                         <input type="hidden" class="form-control" name="id" 
                                         value="<%=menu._id %>">
+                                        
                                     </div>
                                     <button type="submit" class="btn btn-default">Update</button>
                                 </div>
-                                <div class="col-lg-8">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h1 class="panel-title">Panel 1</h1>
-                                                </div>
-                                                <div id="container1" class="panel-body box-container">
-                                                    <ul id="sortable1" class="connectedSortable">
-                                                        <li class="ui-state-default">Item 1</li>
-                                                        <li class="ui-state-default">Item 2</li>
-                                                        <li class="ui-state-default">Item 3</li>
-                                                        <li class="ui-state-default">Item 4</li>
-                                                        <li class="ui-state-default">Item 5</li>
-                                                    </ul>
-                                                    
-                                                    
-                                                </div>
-                                            </div>
+                                <div class="col-lg-4">
+                            
+                                
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h1 class="panel-title">Panel 1</h1>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h1 class="panel-title">Panel 2</h1>
-                                                </div>
-                                                <div id="container2" class="panel-body box-container">
+                                        <div id="container1" class="panel-body box-container">
+                                            <ul id="sortable1" class="connectedSortable">
+                                                
+                                            </ul>
+                                            
+                                            
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                            </form>
+                                <div class="col-lg-4">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h1 class="panel-title">Panel 2</h1>
+                                        </div>
+                                        <div id="container2" class="panel-body box-container">
 
-                                                    <ul id="sortable2" class="connectedSortable">
-                                                        <li class="ui-state-highlight">Item 1</li>
-                                                        <li class="ui-state-highlight">Item 2</li>
-                                                        <li class="ui-state-highlight">Item 3</li>
-                                                        <li class="ui-state-highlight">Item 4</li>
-                                                        <li class="ui-state-highlight">Item 5</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                            <ul id="sortable2" class="connectedSortable">
+                                                <%pages.forEach(function(page , index){%>
+                                                    <li class="ui-state-default">
+                                                        <%=page.title%>
+                                                            <input type="hidden" name="items[<%=page.id %>][slug]" value="<%=page.slug %>">
+                                                            <input type="hidden" name="items[<%=page.id %>][title]" value="<%=page.title %>">
+                                                    </li>
+                                                <% }) %>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
-                       
+                                    
+                                
                        
                     </div>
                     <!-- /.row (nested) -->

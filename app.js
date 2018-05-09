@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(session({ secret: 'apu', saveUninitialized: false, resave: false }));
 app.use(flash());
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
 app.use(bodyParser.json());
 app.use(fileUpload());

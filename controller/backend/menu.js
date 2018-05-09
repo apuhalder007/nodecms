@@ -1,6 +1,7 @@
 let menu = {};
 let speakingurl = require("speakingurl");
 let menuModel = require("../../model/backend/menu");
+let pageModel = require("../../model/backend/page");
 menu.all = function(req, res, next){
     menuModel.find(function(err, menus){
         console.log(menus);
@@ -45,8 +46,17 @@ menu.edit = function(req, res, next){
     let menu = menuModel.findById(id, function(err, menu){
         if(err) throw err;
         if(menu){
-            console.log(menu);
-            res.render('backend/menu/edit-menu', {title: "Edit menu", menu:menu});
+            //console.log(menu);
+
+            pageModel.find({},function (err, pages) {
+                if (err) throw err;
+                res.render('backend/menu/edit-menu', {
+                    title: "Edit menu",
+                    menu: menu,
+                    pages:pages
+                });
+            });
+            
         } 
     })
 }
@@ -58,7 +68,7 @@ menu.editPost = function(req, res, next){
     let status = req.body.status;
     let id = req.body.id;
     let items = [];
-    //console.log(image);
+    console.log(req.body);
     req.checkBody('title', 'Please enter a menu title').notEmpty(); 
     //req.checkBody('image', 'Please upload an image Jpeg, Png or Gif').isImage(filename);
     var errors = req.validationErrors();
