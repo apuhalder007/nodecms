@@ -47,7 +47,6 @@ menu.edit = function(req, res, next){
         if(err) throw err;
         if(menu){
             //console.log(menu);
-
             pageModel.find({},function (err, pages) {
                 if (err) throw err;
                 res.render('backend/menu/edit-menu', {
@@ -67,8 +66,19 @@ menu.editPost = function(req, res, next){
     let order = req.body.order;
     let status = req.body.status;
     let id = req.body.id;
+    let items_name = req.body.items_name;
+    let items_slug = req.body.items_slug;
+    let items_length = req.body.items_name.length;
+
     let items = [];
-    console.log(req.body);
+    if (items_length){
+        for(var i=0; i<= (items_length -1); i++){
+            let name = items_name[i];
+            let slug = items_slug[i];
+            items.push({ name: name, slug: slug});
+        }
+    }
+    //console.log(items);
     req.checkBody('title', 'Please enter a menu title').notEmpty(); 
     //req.checkBody('image', 'Please upload an image Jpeg, Png or Gif').isImage(filename);
     var errors = req.validationErrors();

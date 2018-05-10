@@ -31,7 +31,7 @@ app.use(flash());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 // parse application/json
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use(fileUpload());
 app.set('views', __dirname+"/views/");
 app.set('view engine', "ejs");

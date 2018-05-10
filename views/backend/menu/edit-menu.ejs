@@ -58,7 +58,14 @@
                                         </div>
                                         <div id="container1" class="panel-body box-container">
                                             <ul id="sortable1" class="connectedSortable">
-                                                
+                                                <% var items=  menu.items; %>
+                                                <%items.forEach(function(item , index){%>
+                                                    <li class="ui-state-default">
+                                                        <%=item.name%>
+                                                            <input type="hidden" name="items_slug" value="<%=item.slug %>">
+                                                            <input type="hidden" name="items_name" value="<%=item.name %>">
+                                                    </li>
+                                                <% }) %> 
                                             </ul>
                                             
                                             
@@ -78,8 +85,8 @@
                                                 <%pages.forEach(function(page , index){%>
                                                     <li class="ui-state-default">
                                                         <%=page.title%>
-                                                            <input type="hidden" name="items[<%=page.id %>][slug]" value="<%=page.slug %>">
-                                                            <input type="hidden" name="items[<%=page.id %>][title]" value="<%=page.title %>">
+                                                            <input type="hidden" name="items_slug" value="<%=page.slug %>">
+                                                            <input type="hidden" name="items_name" value="<%=page.title %>">
                                                     </li>
                                                 <% }) %>
                                             </ul>
