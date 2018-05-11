@@ -1,7 +1,12 @@
+let bannerModel = require("../../model/backend/banner");
+
 let pages = {};
 
 pages.home = function(req, res){
-    res.render('frontend/index', { title: "Welcome to the brand!" });
+    bannerModel.find({}, function(err, banners){
+        res.render('frontend/index', { title: "Welcome to the brand!" , banners:banners });
+    })
+    
 }
 pages.about = function (req, res) {
     res.render('frontend/about-us', { title: "About Us" });
