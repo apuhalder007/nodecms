@@ -1,5 +1,5 @@
 let bannerModel = require("../../model/backend/banner");
-
+let pageModel = require("../../model/backend/page");
 let pages = {};
 
 pages.home = function(req, res){
@@ -40,6 +40,21 @@ pages.contact_post = function (req, res) {
         res.end(JSON.stringify(req.body, null, 2));
     }
 }
+
+pages.default = function(req, res, next) {
+    //console.log(req.params.slug);
+    let slug = req.params.slug;
+    pageModel.findOne({ slug: slug}, function(err, page){
+        if (err) res.render('frontend/not-found', { title: "Not Found" });
+        if (page){
+            res.render('frontend/default-page', { title: page.title, content:page.content });
+        }else{
+            res.render('frontend/not-found', { title: "Not Found" });
+        }
+    })
+    
+}
+
 pages.not_found = function(req, res){
     res.render('frontend/not-found', { title: "Not Found" });
 }

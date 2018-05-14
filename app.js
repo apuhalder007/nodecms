@@ -39,8 +39,15 @@ app.use(express.static('public'));
 const frontendRoutes = require('./routes/frontend/routes');
 const authRoutes = require('./routes/backend/auth');
 const dasboardRoutes = require('./routes/backend/dashboard');
-app.use('/', frontendRoutes);
+
 app.use('/admin', authRoutes);
 app.use('/admin', dasboardRoutes);
+app.use('/', frontendRoutes);
+const functions = require('./utilities/functions');
+
+app.locals.frontendMenu = functions.frontendMenu;
+
+app.locals.somevar = "hello world";
+//console.log(app.locals.frontendMenu);
 const port = 3000;
 app.listen(port, ()=>console.log("Server runing on port "+port));

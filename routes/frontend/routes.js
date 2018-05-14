@@ -11,6 +11,7 @@ router.get('/tour', pagesController.tour);
 router.get('/contact-us', pagesController.contact);
 
 router.post('/contact-us', pagesController.contact_post);
+router.get('/:slug', pagesController.default);
 
 //router.get('*', pagesController.not_found);
 
