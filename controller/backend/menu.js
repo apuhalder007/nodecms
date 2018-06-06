@@ -4,7 +4,7 @@ let menuModel = require("../../model/backend/menu");
 let pageModel = require("../../model/backend/page");
 menu.all = function(req, res, next){
     menuModel.find(function(err, menus){
-        console.log(menus);
+        //console.log(menus);
         res.render('backend/menu/menus', {title: "menus", menus:menus});
     })
 }
@@ -68,16 +68,20 @@ menu.editPost = function(req, res, next){
     let id = req.body.id;
     let items_name = req.body.items_name;
     let items_slug = req.body.items_slug;
-    let items_length = req.body.items_name.length;
-
     let items = [];
-    if (items_length){
-        for(var i=0; i<= (items_length -1); i++){
-            let name = items_name[i];
-            let slug = items_slug[i];
-            items.push({ name: name, slug: slug});
+    if(typeof req.body.items_name == "object"){
+        let items_length = req.body.items_name.length;
+        if (items_length) {
+            for (var i = 0; i <= (items_length - 1); i++) {
+                let name = items_name[i];
+                let slug = items_slug[i];
+                items.push({ name: name, slug: slug });
+            }
         }
+    }else{
+        items.push({ name: items_name, slug: items_slug });
     }
+    
     //console.log(items);
     req.checkBody('title', 'Please enter a menu title').notEmpty(); 
     //req.checkBody('image', 'Please upload an image Jpeg, Png or Gif').isImage(filename);
