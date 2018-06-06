@@ -47,7 +47,13 @@ const functions = require('./utilities/functions');
 
 app.locals.frontendMenu = functions.frontendMenu;
 
-app.locals.somevar = "hello world";
+app.locals.somevar = function(){
+
+    setTimeout(() => {
+        return "hello world";
+    }, 2000);
+    
+} 
 //console.log(app.locals.frontendMenu);
 const port = 3000;
 app.listen(port, ()=>console.log("Server runing on port "+port));

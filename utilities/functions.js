@@ -8,13 +8,33 @@ functions.loggedIn = function(req, res, next){
         res.redirect('/admin/login');
     }
 }
- function frontendMenu (){
-    let menuItems = [];
-    let response =  menuModel.findOne({ title:'Header Menu'}, function(err, menu){
-        if(err) throw err;
+ function get_menu_items(){
+    return new Promise(function (resolve, reject) {
+        menuModel.findOne({ title:'Header Menu'}, function(err, menu){
+            
+            menuModel.findOne({
+                title: 'Header Menu'
+            }, function (err, menu) {
+
+                if (err) reject(err);
+                resolve(menu.items);
+            })
+           
+        })
+
     })
-     console.log(response);
-     return response;
+
 }
-functions.frontendMenu = frontendMenu;
+functions.frontendMenu = function(){
+    var initializePromise = get_menu_items();
+    initializePromise.then(function (result) {
+        console.log("Initialized user details");
+        // Use user details from here
+        console.log(result)
+        return result;
+    }, function (err) {
+        console.log(err);
+    })
+}
+    ;
 module.exports = functions;

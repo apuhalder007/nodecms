@@ -1,5 +1,7 @@
+let menuModel = require("../../model/backend/menu");
 let bannerModel = require("../../model/backend/banner");
 let pageModel = require("../../model/backend/page");
+let forntEndMenu = "Header Menu";
 let pages = {};
 
 pages.home = function(req, res){
@@ -41,17 +43,35 @@ pages.contact_post = function (req, res) {
     }
 }
 
+/* For Mongoose, when you don't pass in a function as the second parameter, 
+the value returned by the function call (e.g. Category.count({})) will be a Promise. 
+We will put all of these unresolved Promises in an array and call Promise.all to resolve them. 
+By using Promise.all, you are waiting until all of your count queries get executed before moving 
+on to render your index view. In this case, the results of your Mongoose function calls will be 
+stored in the results array in the order of your queries array. */
+
+
 pages.default = function(req, res, next) {
     //console.log(req.params.slug);
     let slug = req.params.slug;
-    pageModel.findOne({ slug: slug}, function(err, page){
-        if (err) res.render('frontend/not-found', { title: "Not Found" });
-        if (page){
-            res.render('frontend/default-page', { title: page.title, content:page.content });
-        }else{
-            res.render('frontend/not-found', { title: "Not Found" });
-        }
+    let queries = [
+        menuModel.findOne({ title: forntEndMenu}),
+        pageModel.findOne({slug:slug})
+        
+    ];
+
+    Promise.all(queries)
+    .then(results => {
+        res.render('frontend/default-page', {
+            menuItems: results[0].items,
+            title: results[1].title,
+            content: results[1].content
+        });
     })
+    .catch(err => {
+        res.render('frontend/not-found', { title: "Not Found" });
+    });
+
     
 }
 
@@ -59,3 +79,4 @@ pages.not_found = function(req, res){
     res.render('frontend/not-found', { title: "Not Found" });
 }
 module.exports = pages;
+
