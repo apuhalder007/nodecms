@@ -12,7 +12,7 @@
       <a class="navbar-brand" href="/">Logo</a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
+      <!-- <ul class="nav navbar-nav navbar-right">
         <li><a href="/">HOME</a></li>
         
         <li><a href="/about-us">BAND</a></li>
@@ -28,10 +28,16 @@
           </ul>
         </li>
         <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+      </ul> -->
+      <ul class="nav navbar-nav navbar-right">
+      <% menuItes=frontendMenu() %>
+        <% menuItes.forEach(function(item , index){ %>
+          <li>
+            <a href="/<%=item.slug %>"><%=item.name %></a>
+          </li> 
+        <% }) %>
       </ul>
     </div>
   </div>
 </nav>
-<p>
-<%=somevar() %>
-</p>
+

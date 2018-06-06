@@ -47,6 +47,23 @@ const functions = require('./utilities/functions');
 
 app.locals.frontendMenu = functions.frontendMenu;
 
+
+app.locals.asyncTosyncFunc = function() {
+    var sync = true;
+    var data = null;
+    /* query(params, function (result) {
+        data = result;
+        sync = false;
+    }); */
+
+    setTimeout(() => {
+        data = "hello world";
+        sync = false;
+    }, 90);
+    while (sync) { require('deasync').sleep(1); }
+    return data;
+};
+
 app.locals.somevar = function(){
 
     setTimeout(() => {
